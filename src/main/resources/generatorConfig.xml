@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <!-- JDBCの格納場所を指定　日本語がパス内に入っているとうまく機能しない場合あり -->
+  <classPathEntry location="C:\Users\sunada\.m2\repository\mysql\mysql-connector-java\8.0.25\mysql-connector-java-8.0.25.jar"></classPathEntry>
+
+  <context id="MySQL" targetRuntime="MyBatis3">
+
+    <!-- コメント -->
+    <commentGenerator>
+
+      <!--コメント 有効にするとMapper及びModelにコメントが追記される。-->
+      <!-- <property name="suppressAllComments" value="true" /> -->
+
+      <!-- コメントのタイムスタンプ　有効にするとMapper及びModelにタイムスタンプが追記される。-->
+      <!-- <property name="suppressDate" value="true" /> -->
+
+    </commentGenerator>
+
+    <!-- JDBCの接続（userIdは「root」とし、パスワードはrootのパスワードとする） -->
+    <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/Lesson02DB?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=GMT&amp;useUnicode=yes&amp;characterEncoding=UTF-8" userId="root" password="sunadaru4562"></jdbcConnection>
+
+    <!-- タイプ変換 -->
+    <javaTypeResolver>
+
+      <!-- 数値型（Long, Integer, Short, etc.）をbigdecimalに変更するか（value=falseの場合は変更しない） -->
+      <property name="forceBigDecimals" value="false"></property>
+  
+    </javaTypeResolver>
+
+    <!-- Entityの格納先 targetProjectのパスは任意で、src\main\javaまでを指定（それ以降のディレクトリはtargetPackageにより自動生成される。）-->
+    <javaModelGenerator targetPackage="com.seiken_soft.entity" targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <!-- sqlMap（XML）の格納先 targetProjectのパスは任意で、src\main\resourcesまでを指定（それ以降のディレクトリはtargetPackageにより自動生成される。） -->
+    <sqlMapGenerator targetPackage="com.seiken_soft.dao"  targetProject="src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <!--DAO（Mapper）の格納先 targetProjectのパスは任意で、src\main\javaまでを指定（それ以降のディレクトリはtargetPackageにより自動生成される。） またtypeはXMLMAPPERを指定 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.seiken_soft.dao"  targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <!-- テーブル指定　ワイルドカード（%）OK -->
+    <table schema="Lesson02DB" tableName="M\_%"></table>
+    <table schema="Lesson02DB" tableName="T\_%"></table>
+
+  </context>
+</generatorConfiguration>

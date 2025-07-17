@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%-5level}[%style{%t}{bright,blue}] %style{%C}{bright,yellow}: %m%n"></PatternLayout>
+    </Console>
+    <RollingFile name="RollingFile" fileName="./logs/spring-boot-logger-log4j2.log" filePattern="./logs/$${date:yyyy-MM}/spring-boot-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+      <PatternLayout>
+        <Pattern>%d %p %C [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <OnStartupTriggeringPolicy></OnStartupTriggeringPolicy>
+        <SizeBasedTriggeringPolicy size="10 MB"></SizeBasedTriggeringPolicy>
+        <TimeBasedTriggeringPolicy></TimeBasedTriggeringPolicy>
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"></AppenderRef>
+      <AppenderRef ref="RollingFile"></AppenderRef>
+    </Root>
+  </Loggers>
+</configuration>

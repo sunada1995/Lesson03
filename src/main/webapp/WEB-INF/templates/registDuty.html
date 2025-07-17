@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>勤怠画面</title>
+</head>
+<script>
+  function showCurrentTime() {
+  //現在時刻を取得するオブジェクトを作成
+  const now = new Date();
+
+  //Dateオブジェクトから｢時｣｢分｣｢秒｣の数値を取り出す
+  const hour = now.getHours();
+  const minute = String(now.getMinutes()).padStart(2, '0');
+  const second = String(now.getSeconds()).padStart(2, '0');
+  //表示を｢現在の時刻は○時△分×秒です｣の形に整える
+　const time = `${hour}:${minute}:${second}`;
+
+  //id=currentTimeを持つ要素内のテキストをtimeに代入された文字列に変更する
+  document.getElementById('currentTime').textContent = time;
+}
+setInterval(showCurrentTime, 1000);
+
+</script>
+<body style="margin: auto; text-align: center;">
+
+<h1>勤怠画面</h1>
+
+<h2 id="currentTime"></h2>
+
+<form th:action="@{/search}" th:method="POST" style="margin-right:15% ;text-align: center;">
+
+       <table>
+		<tr> 
+		  <td>社員ID   : <input type="text" name="shainId"></td>
+		  <td>出勤時刻 : </td>
+		  <td>退勤時刻 : </td>
+ 	   </tr>
+ 	   </table>
+</form>
+
+</body>
+</html>
