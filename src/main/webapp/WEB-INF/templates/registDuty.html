@@ -10,7 +10,7 @@
   const now = new Date();
 
   //Dateオブジェクトから｢時｣｢分｣｢秒｣の数値を取り出す
-  const hour = now.getHours();
+  const hour = String(now.getHours()).padStart(2, '0');
   const minute = String(now.getMinutes()).padStart(2, '0');
   const second = String(now.getSeconds()).padStart(2, '0');
   //表示を｢現在の時刻は○時△分×秒です｣の形に整える
@@ -21,22 +21,56 @@
 }
 setInterval(showCurrentTime, 1000);
 
+// 社員ID入力時にボタンを活性化
+  window.addEventListener("DOMContentLoaded", () => {
+    const shainInput = document.getElementById("shainId");
+    const clockinBtn = document.getElementById("clockinId");
+    const clockinAndClockoutCheckBtn = document.getElementById("clockinAndClockoutCheckId");
+    const clockinTime = document.getElementById("clockinTimeId");
+    const clockoutBtn = document.getElementById("clockoutId");
+
+    shainInput.addEventListener("input", () => {
+      if (shainInput.value.trim() !== "") {
+        clockinBtn.disabled = false;               // 活性化 出勤ボタン
+        clockinAndclockoutCheckBtn.disabled = false; // 活性化 当月出退勤
+        if(clockinTime.value.trim() !== ""){
+			clockoutBtn.disabled = false;             // 活性化 退勤ボタン
+		}else{
+			clockoutBtn.disabled = true;              // 非活性化 退勤ボタン
+		}
+      } else {
+        clockinBtn.disabled = true;                // 非活性化 出勤ボタン
+        clockinAndclockoutCheckBtn.disabled = true;  // 非活性化 当月出退勤
+      }
+    });
+  });
+   
+
 </script>
-<body style="margin: auto; text-align: center;">
+<body style="text-align: center; background-color:aquamarine;" >
+</br>
+<span>勤怠画面</span>
+</br>
+</br>
+<span id="currentTime" style="background-color: black; color: yellow; font-size:2em;"></span>
 
-<h1>勤怠画面</h1>
-
-<h2 id="currentTime"></h2>
-
-<form th:action="@{/search}" th:method="POST" style="margin-right:15% ;text-align: center;">
+<form id="clockinAndClockout" th:action="@{/clockinAndClockout}" th:method="POST" style="margin: auto; width: fit-content;">
 
        <table>
-		<tr> 
-		  <td>社員ID   : <input type="text" name="shainId"></td>
-		  <td>出勤時刻 : </td>
-		  <td>退勤時刻 : </td>
- 	   </tr>
+	     <tr>
+	       <td>社員ⅠＤ :</td><td><input type="text" name="shainIdNumber" id="shainId"></td>
+ 	     </tr> 	     
+ 	     <tr>
+	       <td style="float: left;">出勤時刻 : </td><td><span id="clockinTimeId" text=""></span></td>
+	     </tr>
+	     <tr>
+	       <td style="float: left;">退勤時刻 : </td><td></td>
+	     </tr>	   
  	   </table>
+ 	   
+ 	   <button type="submit" id="clockinId" name="clockin" form="shainIdNumber" form="clockinAndClockout" style=" background-color:red; color:ghostwhite; border-radius:20%; padding:1em 2.5em; font-size: 1em;" disabled>出勤</button>
+ 	   <button type="submit" id="clockoutId" name="clockout" form="clockinAndClockout" style=" background-color:blue; color:ghostwhite; border-radius:20%; padding:1em 2.5em; font-size: 1em;" disabled>退勤</button>
+ 	   <button type="submit" id="clockinAndClockoutCheckId" name="clockinAndclockoutCheck" form="clockinAndClockout" style=" background-color:orange; color:ghostwhite; border-radius:20%; padding:1em 1.5em; font-size: 1em;" disabled>当月出退勤</button>
 </form>
 
 </body>
