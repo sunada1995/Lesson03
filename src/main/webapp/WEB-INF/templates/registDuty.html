@@ -22,7 +22,7 @@
 setInterval(showCurrentTime, 1000);
 
 // 社員ID入力時にボタンを活性化
-  window.addEventListener("DOMContentLoaded", () => {
+ /* window.addEventListener("DOMContentLoaded", () => {
     const shainInput = document.getElementById("shainId");
     const clockinBtn = document.getElementById("clockinId");
     const clockinAndClockoutCheckBtn = document.getElementById("clockinAndClockoutCheckId");
@@ -44,8 +44,16 @@ setInterval(showCurrentTime, 1000);
       }
     });
   });
-   
+   */
 
+/*
+function clockin(){
+		if(!window.confirm("社員IDを入力してください")){
+			return;
+			}
+			
+	}
+*/
 </script>
 <body style="text-align: center; background-color:aquamarine;" >
 </br>
@@ -54,7 +62,7 @@ setInterval(showCurrentTime, 1000);
 </br>
 <span id="currentTime" style="background-color: black; color: yellow; font-size:2em;"></span>
 
-<form id="clockinAndClockout" th:action="@{/clockinAndClockout}" th:method="POST" style="margin: auto; width: fit-content;">
+<form th:action="@{/duty}" th:method="POST" style="margin: auto; width: fit-content;">
 
        <table>
 	     <tr>
@@ -68,9 +76,9 @@ setInterval(showCurrentTime, 1000);
 	     </tr>	   
  	   </table>
  	   
- 	   <button type="submit" id="clockinId" name="clockin" form="shainIdNumber" form="clockinAndClockout" style=" background-color:red; color:ghostwhite; border-radius:20%; padding:1em 2.5em; font-size: 1em;" disabled>出勤</button>
- 	   <button type="submit" id="clockoutId" name="clockout" form="clockinAndClockout" style=" background-color:blue; color:ghostwhite; border-radius:20%; padding:1em 2.5em; font-size: 1em;" disabled>退勤</button>
- 	   <button type="submit" id="clockinAndClockoutCheckId" name="clockinAndclockoutCheck" form="clockinAndClockout" style=" background-color:orange; color:ghostwhite; border-radius:20%; padding:1em 1.5em; font-size: 1em;" disabled>当月出退勤</button>
+ 	   <button type="submit" id="clockinId" name="clockinAndClockout" style=" background-color:red; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;">出勤</button>
+ 	   <button type="submit" id="clockoutId" name="clockout" style=" background-color:blue; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" disabled>退勤</button>
+ 	   <button type="submit" id="clockinAndClockoutCheckId" name="clockinAndclockoutCheck" style=" background-color:orange; color:ghostwhite; border-radius:5%; padding:1em 1.5em; font-size: 1em;" disabled>当月出退勤</button>
 </form>
 
 </body>

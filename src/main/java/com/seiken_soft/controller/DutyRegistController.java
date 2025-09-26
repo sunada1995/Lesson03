@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DutyRegistController {
 //勤怠画面用のコントローラー
 //初期表示時はinit()
-	@GetMapping("")
+	@GetMapping("/")
 	public String init(Model model) {
 		return "registDuty";
 	}
-	@PostMapping("/clockinAndClockout")
+	@PostMapping
 	public String stamping(Model model) {
 		
 		return "registDuty";
