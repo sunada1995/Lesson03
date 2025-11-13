@@ -48,35 +48,37 @@ setInterval(showCurrentTime, 1000);
 
 /*
 function clockin(){
+	if( document.getElementById('currentTime').innerText != ""){			
 		if(!window.confirm("社員IDを入力してください")){
 			return;
 			}
-			
+		}	
 	}
 */
+
 </script>
 <body style="text-align: center; background-color:aquamarine;" >
 </br>
 <span>勤怠画面</span>
 </br>
 </br>
-<span id="currentTime" style="background-color: black; color: yellow; font-size:2em;"></span>
 
 <form th:action="@{/duty}" th:method="POST" style="margin: auto; width: fit-content;">
+	<span id="currentTime" style="background-color: black; color: yellow; font-size:2em;"></span>
 
        <table>
 	     <tr>
 	       <td>社員ⅠＤ :</td><td><input type="text" name="shainIdNumber" id="shainId"></td>
  	     </tr> 	     
  	     <tr>
-	       <td style="float: left;">出勤時刻 : </td><td><span id="clockinTimeId" text=""></span></td>
+	       <td>出勤時刻 : </td><td><span id="clockinTimeId" th:text="${clockinTime}"></span></td>
 	     </tr>
 	     <tr>
-	       <td style="float: left;">退勤時刻 : </td><td></td>
+	       <td>退勤時刻 : </td><td><span id="clockOutTimeId" th:text="${clockOutTime}"></span></td>
 	     </tr>	   
  	   </table>
  	   
- 	   <button type="submit" id="clockinId" name="clockinAndClockout" style=" background-color:red; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;">出勤</button>
+ 	   <button type="submit" id="clockinId" name="clockinAndClockout" onclick="clockin" style=" background-color:red; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;">出勤</button>
  	   <button type="submit" id="clockoutId" name="clockout" style=" background-color:blue; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" disabled>退勤</button>
  	   <button type="submit" id="clockinAndClockoutCheckId" name="clockinAndclockoutCheck" style=" background-color:orange; color:ghostwhite; border-radius:5%; padding:1em 1.5em; font-size: 1em;" disabled>当月出退勤</button>
 </form>
