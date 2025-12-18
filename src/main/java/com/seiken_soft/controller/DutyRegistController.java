@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/duty")
@@ -19,12 +20,34 @@ public class DutyRegistController {
 		return "registDuty";
 	}
 	@PostMapping
-	public String stamping(Model model) {
+	public String stamping
+	(@RequestParam("stamping") String stampingValue,@RequestParam("shainIdNumber") String shainIdNumber,Model model) {
 		
 		LocalTime now = LocalTime.now();
 		LocalTime truncatedToSeconds = now.truncatedTo(ChronoUnit.SECONDS);
 		
-		model.addAttribute("clockinTime",truncatedToSeconds);
+		//出勤ボタン押下時		
+		if("clockin".equals(stampingValue)) {
+			if(shainIdNumber == "") {
+				return "registDuty";
+			}
+			model.addAttribute("shainIdText",shainIdNumber);
+			model.addAttribute("clockinTime",truncatedToSeconds);
+		}
+		//退勤ボタン押下時
+		if("clockout".equals(stampingValue)) {
+			if(shainIdNumber == "") {
+				return "registDuty";
+			}
+			model.addAttribute("shainIdText",shainIdNumber);
+			model.addAttribute("clockOutTime",truncatedToSeconds);
+		}
+		//当月出退勤ボタン押下時
+		//if("clockinAndclockoutCheck".equals(stampingValue)) {
+		//	model.addAttribute("clockOutTime",truncatedToSeconds);
+		//	return "viewDuty";
+		//}
+		
 		
 		return "registDuty";
 	}
