@@ -29,27 +29,40 @@ window.addEventListener("DOMContentLoaded", () => {
     const currentMonthAttendanceBtn = document.getElementById("currentMonthAttendanceId");
     const clockinTime = document.getElementById("clockinTimeId");
     const clockoutBtn = document.getElementById("clockoutId");
+    const clockOutTime = document.getElementById("clockOutTimeId");
 
-    
-    
-    inputShainId.addEventListener("input", () => {
-      if (inputShainId.value.trim() !== "") {
-        clockinBtn.disabled = false;               // 活性化 出勤ボタン
-        currentMonthAttendanceBtn.disabled = false; // 活性化 当月出退勤
-        if(clockinTime.innerText.trim() !== ""){
-			clockoutBtn.disabled = false;             // 活性化 退勤ボタン
-		}else{
-			clockoutBtn.disabled = true;              // 非活性化 退勤ボタン
+    //社員IDが入力済の場合
+    if(inputShainId.value.trim() != ""){
+		if(clockinTime.textContent != ""){ //出勤時刻が表示されている場合
+			clockoutBtn.disabled = false; // 活性化 退勤ボタン
+		}else if(clockOutTime.textContent != ""){ //退勤時刻が表示されている場合
+			clockoutBtn.disabled = true; // 非活性化 退勤ボタン
 		}
-      } else {
+	}
+    
+    //社員ID入力時
+    inputShainId.addEventListener("input", () => {
+      if (inputShainId.value.trim() !== "") {        
+        currentMonthAttendanceBtn.disabled = false; // 活性化 当月出退勤
+        if(clockinTime.textContent == ""){
+			clockinBtn.disabled = false;           // 活性化 出勤ボタン
+		}
+		if(clockinTime.textContent != ""){
+			clockoutBtn.disabled = false;          // 活性化 退勤ボタン
+		}
+		if(clockOutTime.textContent != ""){
+			clockoutBtn.disabled = true;           // 非活性化 退勤ボタン
+		}      
+      } else if(inputShainId.value.trim() == "") {
         clockinBtn.disabled = true;                // 非活性化 出勤ボタン
+        clockoutBtn.disabled = true;  // 非活性化 退勤ボタン
         currentMonthAttendanceBtn.disabled = true;  // 非活性化 当月出退勤
       }
     });
   });
   
 
-function stamp(){
+function checkForm(){
 	const shainValue = document.getElementById('shainId').value;
 	if(shainValue == ''){	
 			alert('社員IDを入力してください');				    
@@ -65,7 +78,7 @@ function stamp(){
 </br>
 </br>
 
-<form th:action="@{/duty}" th:method="POST" style="margin: auto; width: fit-content;">
+<form th:method="POST" onsubmit="return checkForm()" style="margin: auto; width: fit-content;">
 	<span id="currentTime" style="background-color: black; color: yellow; font-size:2em;"></span>
 
        <table>
@@ -73,16 +86,16 @@ function stamp(){
 	       <td>社員ⅠＤ :</td><td><input type="text" name="shainIdNumber" id="shainId" th:value="${shainIdText}"></td>
  	     </tr> 	     
  	     <tr>
-	       <td>出勤時刻 : </td><td><span id="clockinTimeId" th:text="${clockinTime}"></span></td>
+	       <td>出勤時刻 : </td><td><span id="clockinTimeId" th:text="${session.clockinTime}"></span></td>
 	     </tr>
 	     <tr>
-	       <td>退勤時刻 : </td><td><span id="clockOutTimeId" th:text="${clockOutTime}"></span></td>
+	       <td>退勤時刻 : </td><td><span id="clockOutTimeId" th:text="${session.clockOutTime}"></span></td>
 	     </tr>	   
  	   </table>
  	   
- 	   <button type="submit" name="stamping" id="clockinId" value ="clockin" onclick="stamp()" style=" background-color:red; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" disabled>出勤</button>
- 	   <button type="submit" name="stamping" id="clockoutId" value ="clockout"onclick="stamp()"  style=" background-color:blue; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" disabled>退勤</button>
- 	   <button type="submit" name="stamping" id="currentMonthAttendanceId" value ="currentMonthAttendance" onclick="stamp()" style=" background-color:orange; color:ghostwhite; border-radius:5%; padding:1em 1.5em; font-size: 1em;" disabled>当月出退勤</button>
+ 	   <button type="submit" name="stamping" id="clockinId" value ="clockin"  style=" background-color:red; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" th:formaction="@{/duty}" disabled>出勤</button>
+ 	   <button type="submit" name="stamping" id="clockoutId" value ="clockout"  style=" background-color:blue; color:ghostwhite; border-radius:5%; padding:1em 2.5em; font-size: 1em;" th:formaction="@{/duty}" disabled>退勤</button>
+ 	   <button type="submit" name="stamping" id="currentMonthAttendanceId" value ="currentMonthAttendance"  style=" background-color:orange; color:ghostwhite; border-radius:5%; padding:1em 1.5em; font-size: 1em;" th:formaction="@{/ichiran/currentMonthAttendance}" disabled>当月出退勤</button>
 </form>
 
 </body>

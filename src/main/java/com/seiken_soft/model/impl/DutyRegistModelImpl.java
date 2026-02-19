@@ -15,7 +15,7 @@ public class DutyRegistModelImpl {
 	/* データの挿入 */
 	public void signUp(TDuty tDuty) {
 		
-		tDutyMapper.insert(tDuty);
+		tDutyMapper.insertSelective(tDuty);
 	}
 	
 }
