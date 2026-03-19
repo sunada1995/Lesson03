@@ -11,4 +11,6 @@ public interface DutyRegistModel {
 	
 	Date insertSelective(TDuty record);
 	
+	Date updateByPrimaryKeySelective(TDuty record);
+	
 }

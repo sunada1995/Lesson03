@@ -21,18 +21,26 @@ public class DutyViewController {
 	public String init(Model model) {
 		//当月出退勤ボタン押下時
 				
-					// 現在の月の初日を取得
-				    LocalDate start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
-				    // 現在の月の末日を取得
-				    LocalDate end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+		// 現在の月の初日を取得
+		LocalDate start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+		// 現在の月の末日を取得
+		LocalDate end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
 
-				    // 初日から末日までの日付リストを作成
-				    List<String> formattedDateList = start.datesUntil(end.plusDays(1))
-				    	    .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
-				    	    .collect(Collectors.toList());
+	    // 初日から末日までの日付リストを作成
+		List<String> formattedDateList = start.datesUntil(end.plusDays(1))
+        .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
+		.collect(Collectors.toList());
 
-				    model.addAttribute("dates", formattedDateList);
-					return "viewDuty";
+		MEmployee memployee = new MEmployee();
+		
+        for(String DateList: formattedDateList){
+        	if(DateList == ) {
+        		
+        	}
+        }
+		
+		model.addAttribute("dates", formattedDateList);
+		return "viewDuty";
 				
 	}
 	

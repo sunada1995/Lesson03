@@ -33,11 +33,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //社員IDが入力済の場合
     if(inputShainId.value.trim() != ""){
-		if(clockinTime.textContent != ""){ //出勤時刻が表示されている場合
+		if(clockinTime.textContent != "" && clockOutTime.textContent == ""){ //出勤時刻が表示されていて退勤時間が表示されていない場合
 			clockoutBtn.disabled = false; // 活性化 退勤ボタン
 		}else if(clockOutTime.textContent != ""){ //退勤時刻が表示されている場合
 			clockoutBtn.disabled = true; // 非活性化 退勤ボタン
+			currentMonthAttendanceBtn.disabled = false; // 活性化 当月出退勤
 		}
+		else if(clockinTime.textContent == "" && clockOutTime.textContent == ""){
+			currentMonthAttendanceBtn.disabled = false; // 活性化 当月出退勤
+			clockinBtn.disabled = false;               // 活性化 出勤ボタン
+			
+		}
+		
 	}
     
     //社員ID入力時
@@ -83,7 +90,7 @@ function checkForm(){
 
        <table>
 	     <tr>
-	       <td>社員ⅠＤ :</td><td><input type="text" name="shainIdNumber" id="shainId" th:value="${shainIdText}"></td>
+	       <td>社員ⅠＤ :</td><td><input type="text" name="shainIdNumber" id="shainId" th:value="${session.shainIdText}"></td>
  	     </tr> 	     
  	     <tr>
 	       <td>出勤時刻 : </td><td><span id="clockinTimeId" th:text="${session.clockinTime}"></span></td>

@@ -1,10 +1,11 @@
 package com.seiken_soft.controller;
 
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,12 @@ public class DutyRegistController {
 	
 	// HttpSession型のフィールドを定義する
     private HttpSession session;
+    
+    //自動DI(依存性注入)
+    //@AutowiredをつけることによってSpringがオブジェクトを作る
+    //Controllerに自動で渡す
+    @Autowired
+    private DutyRegistModelImpl dutyRegistModelImpl;
     
     // コンストラクタを作成
     public DutyRegistController(HttpSession session) {
@@ -39,8 +46,13 @@ public class DutyRegistController {
 	public String stamping
 	(@RequestParam("stamping") String stampingValue,@RequestParam("shainIdNumber") String shainIdNumber,Model model) {
 		
-		LocalTime now = LocalTime.now();
-		LocalTime truncatedToSeconds = now.truncatedTo(ChronoUnit.SECONDS);
+		//現在時刻の取得
+		Date date = new Date();
+		//フォーマットを指定
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		//現在時刻をString型で指定したフォーマットに変換。→"HH:mm:ss"
+		String currrentTime = sdf.format(date);
+				
 		
 		//出勤ボタン押下時		
 		if("clockin".equals(stampingValue)) {
@@ -48,10 +60,9 @@ public class DutyRegistController {
 				return "registDuty";
 			}
 			this.session.setAttribute("shainIdText",shainIdNumber);
-			this.session.setAttribute("clockinTime",truncatedToSeconds);
+			this.session.setAttribute("clockinTime",currrentTime);
 			
-			DutyRegistModelImpl dutyRegistModelImpl = new DutyRegistModelImpl();
-			dutyRegistModelImpl.signUp(null);
+			dutyRegistModelImpl.insertClockin(shainIdNumber,date);
 		    
 		}
 		
@@ -61,7 +72,9 @@ public class DutyRegistController {
 				return "registDuty";
 			}			
 			this.session.setAttribute("shainIdText",shainIdNumber);
-			this.session.setAttribute("clockOutTime",truncatedToSeconds);
+			this.session.setAttribute("clockOutTime",currrentTime);
+			
+			dutyRegistModelImpl.insertClockout(shainIdNumber,date);
 		}
 		
 		
